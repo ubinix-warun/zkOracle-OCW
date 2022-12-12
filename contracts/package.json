@@ -1,8 +1,8 @@
 {
   "name": "zkoracle-ofw",
-  "version": "0.1.0",
-  "description": "",
-  "author": "",
+  "version": "0.2.0",
+  "description": "zkOracle/Off-chain worker for MINA protocol.",
+  "author": "Warun",
   "license": "Apache-2.0",
   "keywords": [
     "mina-zkapp",
