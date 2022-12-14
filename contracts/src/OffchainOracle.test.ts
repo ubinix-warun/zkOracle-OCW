@@ -94,18 +94,20 @@ describe('OffchainOracle', () => {
       expect(eventsNextRound[0].type).toEqual('nextRound');
       expect(zkAppInstance.roundId.get().toBigInt()).toEqual(
         roundId.toBigInt() + 1n
-      );
+      ); // check nextRound value was updated.
     });
 
     it('call feed Data for demo ofw (Off-chain worker)', async () => {
       const zkAppInstance = new OffchainOracle(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
 
-      const response = await fetch(
-        'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD'
-      );
+      const priceUrl =
+        'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD';
+      const pricePath = 'RAW.ETH.USD.PRICE';
+
+      const response = await fetch(priceUrl);
       const data = await response.json();
-      const result = JSONPath({ path: 'RAW.ETH.USD.PRICE', json: data });
+      const result = JSONPath({ path: pricePath, json: data });
       const r100 = Math.floor((result[0] * 100) as number);
 
       const privateKey = PrivateKey.fromBase58(
@@ -134,11 +136,9 @@ describe('OffchainOracle', () => {
       const feedData = await zkAppInstance.feedData.get();
       expect(feedData).toEqual(Field(r100));
 
-      console.log(" test 'RAW.ETH.USD.PRICE' = ", r100 / 100);
-      console.log(
-        " test 'RAW.ETH.USD.PRICE' = ",
-        Number(feedData.toBigInt()) / 100
-      );
+      console.log(`request ${priceUrl}
+       - offchain-value '${pricePath}' = ${r100 / 100}
+       - onchain-value '${pricePath}' = ${Number(feedData.toBigInt()) / 100}`);
     });
   });
 });

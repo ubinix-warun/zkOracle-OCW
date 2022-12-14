@@ -1,4 +1,4 @@
-# Mina zkApp: Zkoracle Ofw
+# Mina zkApp: zkOracle OCW
 
 This template uses TypeScript.
 
