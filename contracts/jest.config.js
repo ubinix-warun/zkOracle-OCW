@@ -17,4 +17,5 @@ export default {
     '<rootDir>/node_modules/(?!snarkyjs/node_modules/tslib)',
   ],
   modulePathIgnorePatterns: ['<rootDir>/build/'],
+  testTimeout: 60 * 1000,
 };

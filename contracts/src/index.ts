@@ -1,3 +1,3 @@
-import { Add } from './Add.js';
+import { OffchainOracle } from './OffchainOracle';
 
-export { Add };
+export { OffchainOracle };
