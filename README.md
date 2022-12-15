@@ -12,20 +12,19 @@ Such as, ETH price, MINA or DOT from External API.
 
 ```
 cd zkOracle-OCW/contracts
+
 npm install
 ```
 
 * Generate key for backends/contracts and testing.
 
 ```
-cd zkOracle-OCW/contracts
 node scripts/keygen.js > scripts/key.json
 ```
 
 * Validate key on key.json file.
 
 ```
-cd zkOracle-OCW/contracts
 cat scripts/key.json
 {
   "privateKey": "<>",
@@ -35,18 +34,18 @@ cat scripts/key.json
 
 ## Demo.
 
-
+Soon...
 
 ## Testing on LocalBlockchain
 
-* Build "OffchainOracle" contract.
+* Build ["OffchainOracle"](https://github.com/ubinix-warun/zkOracle-OCW/blob/main/contracts/src/OffchainOracle.ts) contract.
 
 ```
 cd zkOracle-OCW/contracts
 npm run build
 ```
 
-* Run offchain-price-signer server on localhost.
+* Run [offchain-price-signer](https://github.com/ubinix-warun/zkOracle-OCW/tree/main/backends/offchain-price-signer) server on localhost.
 
 ```
 cd zkOracle-OCW/backends/offchain-price-signer
@@ -54,7 +53,7 @@ npm install
 npm run start
 ```
 
-* Run test-script, call contract and simulate operator.
+* Run [test-script](https://github.com/ubinix-warun/zkOracle-OCW/blob/main/contracts/src/OffchainOracle.test.ts), call contract and simulate operator.
 
 ```
 cd zkOracle-OCW/contracts
@@ -138,6 +137,9 @@ zk config
 zk deploy
 
 ```
+
+PublicKey: B62qj1dQSJNbaLnFobM2US3dnC7c7Wpd7m5UNS98AwBPiRMiWD6Th1j
+
 
 ## Credit
 
