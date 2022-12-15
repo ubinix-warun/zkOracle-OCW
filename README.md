@@ -1,19 +1,31 @@
 # zkOracle and Off-chain worker
 
-zkOracle/Off-chain worker for MINA protocol 
+the zkApps Hackathon -- [zkIgnite, Cohort 0 Begins](https://minaprotocol.com/blog/zkignite-cohort0)
+> [Oracles on Mina](https://minaprotocol.com/blog/10-zkapps-use-cases-on-mina-protocol) -- authenticated data from any HTTPS website available on chain.
+
+The zkOracle/Off-chain worker for MINA protocol, Feed On-chain Data with Worker. <br/>
+Such as, ETH price, MINA or DOT from External API.
 
 ## Setup contract and Keygen 
+
+* Install nodejs package on contracts.
 
 ```
 cd zkOracle-OCW/contracts
 npm install
 ```
 
+* Generate key for backends/contracts and testing.
+
 ```
+cd zkOracle-OCW/contracts
 node scripts/keygen.js > scripts/key.json
 ```
 
+* Validate key on key.json file.
+
 ```
+cd zkOracle-OCW/contracts
 cat scripts/key.json
 {
   "privateKey": "<>",
@@ -21,12 +33,28 @@ cat scripts/key.json
 }
 ```
 
-## Build and test contract
+## Demo.
+
+
+
+## Testing on LocalBlockchain
+
+* Build "OffchainOracle" contract.
 
 ```
 cd zkOracle-OCW/contracts
 npm run build
 ```
+
+* Run offchain-price-signer server on localhost.
+
+```
+cd zkOracle-OCW/backends/offchain-price-signer
+npm install
+npm run start
+```
+
+* Run test-script, call contract and simulate operator.
 
 ```
 cd zkOracle-OCW/contracts
@@ -57,21 +85,7 @@ Ran all test suites.
 
 ```
 
-<details>
-  <summary><b><h3>Scenario 1 -- CreateTopic via Webhook (SENDER)</h3></b></summary>
-
-</details>
-
-
-
-<details>
-  <summary><b><h3>Scenario 2 -- CreateTopic via Webhook (SENDER)</h3></b></summary>
-
-</details>
-
-
-
-## Deploy 
+## Deploy to Berkeley Network
 
 ```
 cd zkOracle-OCW/contracts
