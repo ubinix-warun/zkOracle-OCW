@@ -38,6 +38,24 @@ async function localDeploy(
   await txn.send();
 }
 
+// async function localWorker(
+//   zkAppInstance: OffchainOracle,
+//   zkAppPrivatekey: PrivateKey,
+//   deployerAccount: PrivateKey
+// ) {
+// (async () =>
+//   {
+//     console.log('localWorker()Start');
+//     for(let i =0; i < 10; i++) {
+
+//       const event = await zkAppInstance.fetchEvents();
+//       console.log(event);
+//     }
+//     console.log('localWorker()End');
+//   }
+// )();
+// }
+
 describe('OffchainOracle', () => {
   let deployerAccount: PrivateKey,
     zkAppAddress: PublicKey,
@@ -68,7 +86,7 @@ describe('OffchainOracle', () => {
     expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
   });
 
-  describe('actual API requests', () => {
+  describe('simulate single operator', () => {
     it('create nextRound event for demo ofw (Off-chain worker)', async () => {
       const zkAppInstance = new OffchainOracle(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
@@ -139,6 +157,42 @@ describe('OffchainOracle', () => {
       console.log(`request ${priceUrl}
        - offchain-value '${pricePath}' = ${r100 / 100}
        - onchain-value '${pricePath}' = ${Number(feedData.toBigInt()) / 100}`);
+    });
+  });
+
+  describe('actual API requests', () => {
+    it('create nextRound event for demo ofw (Off-chain signer)', async () => {});
+
+    it('call feed Data for demo ofw (Off-chain signer)', async () => {});
+  });
+
+  describe('off-chain worker', () => {
+    it('full-worker', async () => {
+      const zkAppInstance = new OffchainOracle(zkAppAddress);
+      await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
+
+      // localWorker(zkAppInstance, zkAppPrivateKey, deployerAccount);
+
+      const privateKey = PrivateKey.fromBase58(
+        process.env.PRIVATE_KEY ?? key.privateKey
+      );
+
+      // 1. Start request 'nextRound', Request New FeedData.
+      const roundId = await zkAppInstance.roundId.get();
+
+      const signatureNextRound = Signature.create(privateKey, [roundId]);
+
+      const txnNextRound = await Mina.transaction(deployerAccount, () => {
+        zkAppInstance.nextRound(
+          signatureNextRound ?? fail('something is wrong with the signature')
+        );
+      });
+      await txnNextRound.prove();
+      await txnNextRound.send();
+
+      const eventsNextRound = await zkAppInstance.fetchEvents();
+
+      console.log(eventsNextRound);
     });
   });
 });

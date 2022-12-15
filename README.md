@@ -19,10 +19,14 @@ cat scripts/key.json
   "privateKey": "<>",
   "publicKey": "<>"
 }
-
 ```
 
-## Run test contract
+## Build and test contract
+
+```
+cd zkOracle-OFW/contracts
+npm run build
+```
 
 ```
 cd zkOracle-OFW/contracts
@@ -31,14 +35,9 @@ npm run test
 > node --experimental-vm-modules --experimental-wasm-modules 
   --experimental-wasm-threads node_modules/jest/bin/jest.js
 
-(node:128511) ExperimentalWarning: VM Modules is an experimental feature. 
-  This feature could change at any time
-  (Use `node --trace-warnings ...` to show where the warning was created)
-Browserslist: caniuse-lite is outdated. Please run:
-  npx browserslist@latest --update-db
-  Why you should do it regularly: 
-    https://github.com/browserslist/browserslist#browsers-data-updating
-  console.log
+ ...
+
+ console.log
     request https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD
            - offchain-value 'RAW.ETH.USD.PRICE' = 1324.07
            - onchain-value 'RAW.ETH.USD.PRICE' = 1324.07
@@ -59,12 +58,18 @@ Time:        64.822 s, estimated 77 s
 Ran all test suites.
   ●  process.exit called with "0"
 
-      at Timeout.shutdown [as _onTimeout] (node_modules/snarkyjs/src/snarky/wrapper.js:15:11)
-
 ```
 
 ## Deploy 
 
 ```
+cd zkOracle-OFW/contracts
+zk config
+
+-- Name: berkeley
+-- URL: https://proxy.berkeley.minaexplorer.com/graphql
+-- Fee: 0.1
+
+zk deploy
 
 ```
