@@ -5,7 +5,7 @@ zkOracle/Off-chain worker for MINA protocol
 ## Setup contract and Keygen 
 
 ```
-cd zkOracle-OFW/contracts
+cd zkOracle-OCW/contracts
 npm install
 ```
 
@@ -24,12 +24,12 @@ cat scripts/key.json
 ## Build and test contract
 
 ```
-cd zkOracle-OFW/contracts
+cd zkOracle-OCW/contracts
 npm run build
 ```
 
 ```
-cd zkOracle-OFW/contracts
+cd zkOracle-OCW/contracts
 npm run test
 
 > node --experimental-vm-modules --experimental-wasm-modules 
@@ -37,33 +37,44 @@ npm run test
 
  ...
 
- console.log
-    request https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD
-           - offchain-value 'RAW.ETH.USD.PRICE' = 1324.07
-           - onchain-value 'RAW.ETH.USD.PRICE' = 1324.07
-
-      at Object.<anonymous> (src/OffchainOracle.test.ts:141:15)
-
- PASS  src/OffchainOracle.test.ts (64.737 s)
+ PASS  src/OffchainOracle.test.ts (101.53 s)
   OffchainOracle
-    ✓ generates and deploys the `OffchainOracle` smart contract (8924 ms)
+    ✓ generates and deploys the `OffchainOracle` smart contract (9209 ms)
+    simulate single operator
+      ✓ create nextRound event for demo ocw (Off-chain worker) (30867 ms)
+      ✓ call feed Data for demo ocw (Off-chain worker) (12556 ms)
     actual API requests
-      ✓ create nextRound event for demo ofw (Off-chain worker) (31609 ms)
-      ✓ call feed Data for demo ofw (Off-chain worker) (12637 ms)
+      ✓ call feed ETH price for demo ocw (Off-chain signer) (12523 ms)
+      ✓ call feed MINA price for demo ocw (Off-chain signer) (12524 ms)
+      ✓ call feed DOT price for demo ocw (Off-chain signer) (12793 ms)
 
 Test Suites: 1 passed, 1 total
-Tests:       3 passed, 3 total
+Tests:       6 passed, 6 total
 Snapshots:   0 total
-Time:        64.822 s, estimated 77 s
+Time:        101.618 s
 Ran all test suites.
   ●  process.exit called with "0"
 
 ```
 
+<details>
+  <summary><b><h3>Scenario 1 -- CreateTopic via Webhook (SENDER)</h3></b></summary>
+
+</details>
+
+
+
+<details>
+  <summary><b><h3>Scenario 2 -- CreateTopic via Webhook (SENDER)</h3></b></summary>
+
+</details>
+
+
+
 ## Deploy 
 
 ```
-cd zkOracle-OFW/contracts
+cd zkOracle-OCW/contracts
 zk config
 
 -- Name: berkeley
@@ -73,3 +84,9 @@ zk config
 zk deploy
 
 ```
+
+## Credit
+
+* [MINA Protocol](https://minaprotocol.com/) - Mina is building the privacy and security layer for web3.
+* [mina-credit-score-signer](https://github.com/jackryanservia/mina-credit-score-signer) - Koa API that signs a specified user’s fake credit score with a Mina compatible signature scheme.
+* [chainlink-polkadot](https://github.com/smartcontractkit/chainlink-polkadot/tree/master/pallet-chainlink) - This pallet allows your substrate built parachain/blockchain to interract with chainlink. 

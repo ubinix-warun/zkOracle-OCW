@@ -87,7 +87,7 @@ describe('OffchainOracle', () => {
   });
 
   describe('simulate single operator', () => {
-    it('create nextRound event for demo ofw (Off-chain worker)', async () => {
+    it('create nextRound event for demo ocw (Off-chain worker)', async () => {
       const zkAppInstance = new OffchainOracle(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
 
@@ -98,6 +98,8 @@ describe('OffchainOracle', () => {
       const roundId = await zkAppInstance.roundId.get();
 
       const signatureNextRound = Signature.create(privateKey, [roundId]);
+
+      // Operator call nextRound fn, fetch 'nextRound' event.
 
       const txnNextRound = await Mina.transaction(deployerAccount, () => {
         zkAppInstance.nextRound(
@@ -115,9 +117,13 @@ describe('OffchainOracle', () => {
       ); // check nextRound value was updated.
     });
 
-    it('call feed Data for demo ofw (Off-chain worker)', async () => {
+    it('call feed Data for demo ocw (Off-chain worker)', async () => {
       const zkAppInstance = new OffchainOracle(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
+
+      const roundId = Field(0); // First round's Zero
+      // Simulate the operator got 'nextRound',
+      //   operator call external api and feed The data to MINA blockchain.
 
       const priceUrl =
         'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD';
@@ -132,11 +138,12 @@ describe('OffchainOracle', () => {
         process.env.PRIVATE_KEY ?? key.privateKey
       );
 
-      const roundId = Field(0); // First round's Zero
       const signatureFeed = Signature.create(privateKey, [
         roundId,
         Field(r100),
       ]);
+
+      // Operator call feed fn, fetch 'newFeeddata' event.
 
       const txnFeed = await Mina.transaction(deployerAccount, () => {
         zkAppInstance.feed(
@@ -161,38 +168,91 @@ describe('OffchainOracle', () => {
   });
 
   describe('actual API requests', () => {
-    it('create nextRound event for demo ofw (Off-chain signer)', async () => {});
-
-    it('call feed Data for demo ofw (Off-chain signer)', async () => {});
-  });
-
-  describe('off-chain worker', () => {
-    it('full-worker', async () => {
+    it('call feed ETH price for demo ocw (Off-chain signer)', async () => {
       const zkAppInstance = new OffchainOracle(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
 
-      // localWorker(zkAppInstance, zkAppPrivateKey, deployerAccount);
+      const response = await fetch('http://localhost:3000/ETH/0');
+      const data = await response.json();
 
-      const privateKey = PrivateKey.fromBase58(
-        process.env.PRIVATE_KEY ?? key.privateKey
-      );
+      const roundId = Field(data.data.roundId); // First round's Zero
+      const priceData = Field(data.data.price.onchain);
+      const signature = Signature.fromJSON(data.signature);
 
-      // 1. Start request 'nextRound', Request New FeedData.
-      const roundId = await zkAppInstance.roundId.get();
-
-      const signatureNextRound = Signature.create(privateKey, [roundId]);
-
-      const txnNextRound = await Mina.transaction(deployerAccount, () => {
-        zkAppInstance.nextRound(
-          signatureNextRound ?? fail('something is wrong with the signature')
+      // Operator call feed fn, fetch 'newFeeddata' event.
+      const txnFeed = await Mina.transaction(deployerAccount, () => {
+        zkAppInstance.feed(
+          roundId,
+          priceData,
+          signature ?? fail('something is wrong with the signature')
         );
       });
-      await txnNextRound.prove();
-      await txnNextRound.send();
+      await txnFeed.prove();
+      await txnFeed.send();
 
-      const eventsNextRound = await zkAppInstance.fetchEvents();
+      const eventsFeed = await zkAppInstance.fetchEvents();
+      expect(eventsFeed[0].type).toEqual('newFeedData');
 
-      console.log(eventsNextRound);
+      const feedData = await zkAppInstance.feedData.get();
+      expect(feedData).toEqual(Field(priceData));
+    });
+
+    it('call feed MINA price for demo ocw (Off-chain signer)', async () => {
+      const zkAppInstance = new OffchainOracle(zkAppAddress);
+      await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
+
+      const response = await fetch('http://localhost:3000/MINA/0');
+      const data = await response.json();
+
+      const roundId = Field(data.data.roundId); // First round's Zero
+      const priceData = Field(data.data.price.onchain);
+      const signature = Signature.fromJSON(data.signature);
+
+      // Operator call feed fn, fetch 'newFeeddata' event.
+      const txnFeed = await Mina.transaction(deployerAccount, () => {
+        zkAppInstance.feed(
+          roundId,
+          priceData,
+          signature ?? fail('something is wrong with the signature')
+        );
+      });
+      await txnFeed.prove();
+      await txnFeed.send();
+
+      const eventsFeed = await zkAppInstance.fetchEvents();
+      expect(eventsFeed[0].type).toEqual('newFeedData');
+
+      const feedData = await zkAppInstance.feedData.get();
+      expect(feedData).toEqual(Field(priceData));
+    });
+
+    it('call feed DOT price for demo ocw (Off-chain signer)', async () => {
+      const zkAppInstance = new OffchainOracle(zkAppAddress);
+      await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
+
+      const response = await fetch('http://localhost:3000/DOT/0');
+      const data = await response.json();
+
+      const roundId = Field(data.data.roundId); // First round's Zero
+      const priceData = Field(data.data.price.onchain);
+      const signature = Signature.fromJSON(data.signature);
+
+      // Operator call feed fn, fetch 'newFeeddata' event.
+      const txnFeed = await Mina.transaction(deployerAccount, () => {
+        zkAppInstance.feed(
+          roundId,
+          priceData,
+          signature ?? fail('something is wrong with the signature')
+        );
+      });
+      await txnFeed.prove();
+      await txnFeed.send();
+
+      const eventsFeed = await zkAppInstance.fetchEvents();
+      expect(eventsFeed[0].type).toEqual('newFeedData');
+
+      const feedData = await zkAppInstance.feedData.get();
+      expect(feedData).toEqual(Field(priceData));
     });
   });
 });

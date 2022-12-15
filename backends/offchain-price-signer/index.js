@@ -5,6 +5,8 @@ const { JSONPath } = require("jsonpath-plus");
 
 const PORT = process.env.PORT || 3000;
 
+const key = require('../../contracts/scripts/key.json');
+
 const app = new Koa();
 const router = new Router();
 
@@ -21,14 +23,13 @@ async function getSignedPriceInUSD(symbol, roundId) {
   const data = await response.json();
   const result = JSONPath({ path: pricePath, json: data });
 
-
   // The private key of our account. When running locally the hardcoded key will
   // be used. In production the key will be loaded from a Vercel environment
   // variable.
+
   const privateKey = PrivateKey.fromBase58(
-    process.env.PRIVATE_KEY ??
-      "EKF65JKw9Q1XWLDZyZNGysBbYG21QbJf3a4xnEoZPZ28LKYGMw53"
-  );
+        process.env.PRIVATE_KEY ?? key.privateKey
+    );
 
   // We get the ${symbol} price.
   const knownPriceInUSD = result[0];
