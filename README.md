@@ -62,7 +62,34 @@ cd zkOracle-OCW/contracts
 npm run test
 ```
 
-#### Sample test case: Call price-signer, feed MINA price to on chain.
+#### Test results: 6 passed, 6 total
+
+  
+```
+
+ PASS  src/OffchainOracle.test.ts (101.53 s)
+  OffchainOracle
+    ✓ generates and deploys the `OffchainOracle` smart contract (9209 ms)
+    simulate single operator
+      ✓ create nextRound event for demo ocw (Off-chain worker) (30867 ms)
+      ✓ call feed Data for demo ocw (Off-chain worker) (12556 ms)
+    actual API requests
+      ✓ call feed ETH price for demo ocw (Off-chain signer) (12523 ms)
+      ✓ call feed MINA price for demo ocw (Off-chain signer) (12524 ms)
+      ✓ call feed DOT price for demo ocw (Off-chain signer) (12793 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        101.618 s
+Ran all test suites.
+  ●  process.exit called with "0"
+
+```
+
+
+<details>
+  <summary><b><h5>Sample test case: Call price-signer, feed MINA price to on chain.</h3></b></summary>
 
 ```
     ...
@@ -92,30 +119,6 @@ npm run test
     
 ```
 
-<details>
-  <summary><b><h5>Test results: 6 passed, 6 total</h3></b></summary>
-  
-```
-
- PASS  src/OffchainOracle.test.ts (101.53 s)
-  OffchainOracle
-    ✓ generates and deploys the `OffchainOracle` smart contract (9209 ms)
-    simulate single operator
-      ✓ create nextRound event for demo ocw (Off-chain worker) (30867 ms)
-      ✓ call feed Data for demo ocw (Off-chain worker) (12556 ms)
-    actual API requests
-      ✓ call feed ETH price for demo ocw (Off-chain signer) (12523 ms)
-      ✓ call feed MINA price for demo ocw (Off-chain signer) (12524 ms)
-      ✓ call feed DOT price for demo ocw (Off-chain signer) (12793 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       6 passed, 6 total
-Snapshots:   0 total
-Time:        101.618 s
-Ran all test suites.
-  ●  process.exit called with "0"
-
-```
 </details>
 
 
