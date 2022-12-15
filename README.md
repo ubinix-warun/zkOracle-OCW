@@ -59,11 +59,42 @@ npm run start
 ```
 cd zkOracle-OCW/contracts
 npm run test
+```
 
-> node --experimental-vm-modules --experimental-wasm-modules 
-  --experimental-wasm-threads node_modules/jest/bin/jest.js
+#### Sample test case: Call price-signer, feed MINA price to on chain.
 
- ...
+```
+    ...
+    
+    const response = await fetch('http://localhost:3000/MINA/0');
+    const data = await response.json();
+
+    const roundId = Field(data.data.roundId); // First round's Zero
+    const priceData = Field(data.data.price.onchain);
+    const signature = Signature.fromJSON(data.signature);
+
+    // Operator call feed fn, fetch 'newFeeddata' event.
+    const txnFeed = await Mina.transaction(deployerAccount, () => {
+      zkAppInstance.feed(
+        roundId,
+        priceData,
+        signature ?? fail('something is wrong with the signature')
+      );
+    });
+    await txnFeed.prove();
+    await txnFeed.send();
+    
+    const eventsFeed = await zkAppInstance.fetchEvents();
+    expect(eventsFeed[0].type).toEqual('newFeedData');
+    
+    ...
+    
+```
+
+<details>
+  <summary><b><h5>Test results: 6 passed, 6 total</h3></b></summary>
+  
+```
 
  PASS  src/OffchainOracle.test.ts (101.53 s)
   OffchainOracle
@@ -84,8 +115,12 @@ Ran all test suites.
   ●  process.exit called with "0"
 
 ```
+</details>
+
 
 ## Deploy to Berkeley Network
+
+* Setting berkeley network via zk-cli.
 
 ```
 cd zkOracle-OCW/contracts
@@ -95,6 +130,11 @@ zk config
 -- URL: https://proxy.berkeley.minaexplorer.com/graphql
 -- Fee: 0.1
 
+```
+
+* Deploy OffchainOracle to Berkeley network.
+
+```
 zk deploy
 
 ```
