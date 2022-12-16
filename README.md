@@ -40,7 +40,7 @@ Soon...
 
 ## Testing on LocalBlockchain
 
-* Build ["OffchainOracle"](https://github.com/ubinix-warun/zkOracle-OCW/blob/main/contracts/src/OffchainOracle.ts) contract.
+* Build ["OffchainOracle"](https://github.com/ubinix-warun/zkOracle-OCW/blob/main/contracts/src/OffchainOracle.ts), ["OffchainOracleLocal"](https://github.com/ubinix-warun/zkOracle-OCW/blob/main/contracts/src/OffchainOracleLocal.ts) contract.
 
 ```
 cd zkOracle-OCW/contracts
@@ -55,7 +55,7 @@ npm install
 npm run start
 ```
 
-* Run [test-script](https://github.com/ubinix-warun/zkOracle-OCW/blob/main/contracts/src/OffchainOracle.test.ts), call contract and simulate operator.
+* Run [test-script](https://github.com/ubinix-warun/zkOracle-OCW/blob/main/contracts/src/OffchainOracleLocal.test.ts), call contract and simulate operator.
 
 ```
 cd zkOracle-OCW/contracts
@@ -67,7 +67,7 @@ npm run test
   
 ```
 
- PASS  src/OffchainOracle.test.ts (101.53 s)
+ PASS  src/OffchainOracleLocal.test.ts (101.53 s)
   OffchainOracle
     ✓ generates and deploys the `OffchainOracle` smart contract (9209 ms)
     simulate single operator
