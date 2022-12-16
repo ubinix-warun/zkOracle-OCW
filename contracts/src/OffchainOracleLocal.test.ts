@@ -1,4 +1,4 @@
-import { OffchainOracle } from './OffchainOracle';
+import { OffchainOracleLocal } from './OffchainOracleLocal';
 import {
   isReady,
   shutdown,
@@ -24,7 +24,7 @@ function createLocalBlockchain() {
 }
 
 async function localDeploy(
-  zkAppInstance: OffchainOracle,
+  zkAppInstance: OffchainOracleLocal,
   zkAppPrivatekey: PrivateKey,
   deployerAccount: PrivateKey
 ) {
@@ -63,7 +63,7 @@ describe('OffchainOracle', () => {
 
   beforeAll(async () => {
     await isReady;
-    if (proofsEnabled) OffchainOracle.compile();
+    if (proofsEnabled) OffchainOracleLocal.compile();
   });
 
   beforeEach(async () => {
@@ -80,7 +80,7 @@ describe('OffchainOracle', () => {
   });
 
   it('generates and deploys the `OffchainOracle` smart contract', async () => {
-    const zkAppInstance = new OffchainOracle(zkAppAddress);
+    const zkAppInstance = new OffchainOracleLocal(zkAppAddress);
     await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
     const oraclePublicKey = zkAppInstance.oraclePublicKey.get();
     expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
@@ -88,7 +88,7 @@ describe('OffchainOracle', () => {
 
   describe('simulate single operator', () => {
     it('create nextRound event for demo ocw (Off-chain worker)', async () => {
-      const zkAppInstance = new OffchainOracle(zkAppAddress);
+      const zkAppInstance = new OffchainOracleLocal(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
 
       const privateKey = PrivateKey.fromBase58(
@@ -118,7 +118,7 @@ describe('OffchainOracle', () => {
     });
 
     it('call feed Data for demo ocw (Off-chain worker)', async () => {
-      const zkAppInstance = new OffchainOracle(zkAppAddress);
+      const zkAppInstance = new OffchainOracleLocal(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
 
       const roundId = Field(0); // First round's Zero
@@ -169,7 +169,7 @@ describe('OffchainOracle', () => {
 
   describe('actual API requests', () => {
     it('call feed ETH price for demo ocw (Off-chain signer)', async () => {
-      const zkAppInstance = new OffchainOracle(zkAppAddress);
+      const zkAppInstance = new OffchainOracleLocal(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
 
       const response = await fetch('http://localhost:3000/ETH/0');
@@ -198,7 +198,7 @@ describe('OffchainOracle', () => {
     });
 
     it('call feed MINA price for demo ocw (Off-chain signer)', async () => {
-      const zkAppInstance = new OffchainOracle(zkAppAddress);
+      const zkAppInstance = new OffchainOracleLocal(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
 
       const response = await fetch('http://localhost:3000/MINA/0');
@@ -227,7 +227,7 @@ describe('OffchainOracle', () => {
     });
 
     it('call feed DOT price for demo ocw (Off-chain signer)', async () => {
-      const zkAppInstance = new OffchainOracle(zkAppAddress);
+      const zkAppInstance = new OffchainOracleLocal(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
 
       const response = await fetch('http://localhost:3000/DOT/0');

@@ -138,9 +138,20 @@ zk config
 ```
 zk deploy
 
+...
+
+  ┌────────────────┬─────────────────────────────────────────────────┐
+  │ Network        │ berkeley                                        │
+  ├────────────────┼─────────────────────────────────────────────────┤
+  │ Url            │ https://proxy.berkeley.minaexplorer.com/graphql │
+  ├────────────────┼─────────────────────────────────────────────────┤
+  │ Smart Contract │ OffchainOracle                                  │
+  └────────────────┴─────────────────────────────────────────────────┘
+  
+
 ```
 
-PublicKey: <>
+PublicKey: B62qj1dQSJNbaLnFobM2US3dnC7c7Wpd7m5UNS98AwBPiRMiWD6Th1j
 
 
 ## Credit

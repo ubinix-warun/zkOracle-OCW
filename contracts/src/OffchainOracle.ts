@@ -8,12 +8,14 @@ import {
   Permissions,
   PublicKey,
   Signature,
-  PrivateKey,
+  // PrivateKey,
 } from 'snarkyjs';
 
 // The public key of our trusted data provider
-import key from '../scripts/key.json';
-const ORACLE_PUBLIC_KEY = key.publicKey;
+// import key from '../scripts/key.json'; // For Testing
+// const ORACLE_PUBLIC_KEY = key.publicKey;
+const ORACLE_PUBLIC_KEY =
+  'B62qj1dQSJNbaLnFobM2US3dnC7c7Wpd7m5UNS98AwBPiRMiWD6Th1j';
 
 export class OffchainOracle extends SmartContract {
   // Define contract state
@@ -33,16 +35,10 @@ export class OffchainOracle extends SmartContract {
       ...Permissions.default(),
       editState: Permissions.proofOrSignature(),
     });
-  }
-
-  @method init(zkappKey: PrivateKey) {
-    super.init(zkappKey);
     // Initialize contract state
     this.oraclePublicKey.set(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
     this.roundId.set(Field(0));
     this.feedData.set(Field(0));
-    // Specify that caller should include signature with tx instead of proof
-    this.requireSignature();
   }
 
   @method nextRound(signature: Signature) {
