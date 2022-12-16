@@ -154,7 +154,7 @@ zk deploy
 
 ```
 
-PublicKey: B62qj1dQSJNbaLnFobM2US3dnC7c7Wpd7m5UNS98AwBPiRMiWD6Th1j
+* PublicKey: [B62qj1dQSJNbaLnFobM2US3dnC7c7Wpd7m5UNS98AwBPiRMiWD6Th1j](https://berkeley.minaexplorer.com/wallet/B62qj1dQSJNbaLnFobM2US3dnC7c7Wpd7m5UNS98AwBPiRMiWD6Th1j)
 
 
 ## Credit
