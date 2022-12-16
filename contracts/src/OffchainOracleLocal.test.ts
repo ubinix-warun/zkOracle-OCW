@@ -38,24 +38,6 @@ async function localDeploy(
   await txn.send();
 }
 
-// async function localWorker(
-//   zkAppInstance: OffchainOracle,
-//   zkAppPrivatekey: PrivateKey,
-//   deployerAccount: PrivateKey
-// ) {
-// (async () =>
-//   {
-//     console.log('localWorker()Start');
-//     for(let i =0; i < 10; i++) {
-
-//       const event = await zkAppInstance.fetchEvents();
-//       console.log(event);
-//     }
-//     console.log('localWorker()End');
-//   }
-// )();
-// }
-
 describe('OffchainOracle', () => {
   let deployerAccount: PrivateKey,
     zkAppAddress: PublicKey,
