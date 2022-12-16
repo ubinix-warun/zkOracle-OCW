@@ -6,7 +6,7 @@ the zkApps Hackathon -- [zkIgnite, Cohort 0 Begins](https://minaprotocol.com/blo
 The zkOracle/Off-chain worker for MINA protocol, Feed On-chain Data with Worker. <br/>
 Such as, ETH price, MINA or DOT from External API.
 
-<img src="https://user-images.githubusercontent.com/3756229/207847614-fca0c6b0-13eb-422c-8322-121730359ef1.png" width="70%">
+<img src="https://user-images.githubusercontent.com/3756229/207847614-fca0c6b0-13eb-422c-8322-121730359ef1.png" width="80%">
 
 ## Setup contract and Keygen 
 
@@ -62,7 +62,34 @@ cd zkOracle-OCW/contracts
 npm run test
 ```
 
-#### Sample test case: Call price-signer, feed MINA price to on chain.
+#### Test results: 6 passed, 6 total
+
+  
+```
+
+ PASS  src/OffchainOracle.test.ts (101.53 s)
+  OffchainOracle
+    ✓ generates and deploys the `OffchainOracle` smart contract (9209 ms)
+    simulate single operator
+      ✓ create nextRound event for demo ocw (Off-chain worker) (30867 ms)
+      ✓ call feed Data for demo ocw (Off-chain worker) (12556 ms)
+    actual API requests
+      ✓ call feed ETH price for demo ocw (Off-chain signer) (12523 ms)
+      ✓ call feed MINA price for demo ocw (Off-chain signer) (12524 ms)
+      ✓ call feed DOT price for demo ocw (Off-chain signer) (12793 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        101.618 s
+Ran all test suites.
+  ●  process.exit called with "0"
+
+```
+
+
+<details>
+  <summary><b><h5>Sample test case: Call price-signer, feed MINA price to on chain.</h3></b></summary>
 
 ```
     ...
@@ -92,30 +119,6 @@ npm run test
     
 ```
 
-<details>
-  <summary><b><h5>Test results: 6 passed, 6 total</h3></b></summary>
-  
-```
-
- PASS  src/OffchainOracle.test.ts (101.53 s)
-  OffchainOracle
-    ✓ generates and deploys the `OffchainOracle` smart contract (9209 ms)
-    simulate single operator
-      ✓ create nextRound event for demo ocw (Off-chain worker) (30867 ms)
-      ✓ call feed Data for demo ocw (Off-chain worker) (12556 ms)
-    actual API requests
-      ✓ call feed ETH price for demo ocw (Off-chain signer) (12523 ms)
-      ✓ call feed MINA price for demo ocw (Off-chain signer) (12524 ms)
-      ✓ call feed DOT price for demo ocw (Off-chain signer) (12793 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       6 passed, 6 total
-Snapshots:   0 total
-Time:        101.618 s
-Ran all test suites.
-  ●  process.exit called with "0"
-
-```
 </details>
 
 
