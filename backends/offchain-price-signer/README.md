@@ -7,6 +7,8 @@ Koa API that signs a specified price with a Mina compatible signature scheme.
 * symbol "ETH", "MINA", "DOT"
 * roundId 1, 2 ...
 
+<img src="https://user-images.githubusercontent.com/3756229/207847614-fca0c6b0-13eb-422c-8322-121730359ef1.png" width="80%">
+
 ## Setup & Run 'Offchain Price Signer'
 
 ```
