@@ -47,8 +47,11 @@ node build/src/worker.js
 ```
 
 <details>
-  <summary><b><h5>Sample console log: "run worker @16/12/22" </h3></b></summary>
+  <summary><b><h5>Sample console log: "run worker for MINA/USD price @16/12/22" </h3></b></summary>
 
+  
+* See [Deploy](#deploy-to-berkeley-network) or Use PublicKey: [B62qj1dQSJNbaLnFobM2US3dnC7c7Wpd7m5UNS98AwBPiRMiWD6Th1j](https://berkeley.minaexplorer.com/wallet/B62qj1dQSJNbaLnFobM2US3dnC7c7Wpd7m5UNS98AwBPiRMiWD6Th1j)
+  
 ```
 
 OCW: SnarkyJS loaded
@@ -56,7 +59,6 @@ Using fee payer account with nonce 16, balance 45600000000
 Compiling smart contract...
 warning: using a `utils.ts` written before `isProved` made available. Check https://docs.minaprotocol.com/zkapps/tutorials/deploying-to-a-live-network for updates
 OCW: current value of roundId is 7
-OCW: current value of MINA/USD is 0.49
 Creating an execution proof...
 creating proof took 41.937 seconds
 Sending the transaction...
