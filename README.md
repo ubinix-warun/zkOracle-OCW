@@ -46,6 +46,9 @@ node build/src/worker.js
 
 ```
 
+<img src="https://user-images.githubusercontent.com/3756229/208230355-3be98e20-1dfe-48c4-9fb3-9f7d7eff97d0.png" width="80%">
+
+
 <details>
   <summary><b><h5>Sample console log: "run worker for MINA/USD price @16/12/22" </h3></b></summary>
 
