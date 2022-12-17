@@ -83,7 +83,7 @@ waiting for zkApp state to change... (current state:  490)
   
 </details>
 
-### [Demo]() -- n min
+### [Demo](https://youtu.be/6cmeeP_Uw4Y) -- 13 min
 
 -----------------
 
