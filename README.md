@@ -34,9 +34,53 @@ cat scripts/key.json
 }
 ```
 
-## Demo.
+## Run Offchain Worker.
 
-Soon...
+<img src="https://user-images.githubusercontent.com/3756229/208219974-445a0ab1-e62a-4ac2-af12-569b0dcc53cf.png" width="80%">
+
+```
+cd zkOracle-OCW/contracts
+
+npm run build
+node build/src/worker.js
+
+```
+
+<details>
+  <summary><b><h5>Sample console log: "run worker @16/12/22" </h3></b></summary>
+
+```
+
+OCW: SnarkyJS loaded
+Using fee payer account with nonce 16, balance 45600000000
+Compiling smart contract...
+warning: using a `utils.ts` written before `isProved` made available. Check https://docs.minaprotocol.com/zkapps/tutorials/deploying-to-a-live-network for updates
+OCW: current value of roundId is 7
+OCW: current value of MINA/USD is 0.49
+Creating an execution proof...
+creating proof took 41.937 seconds
+Sending the transaction...
+See transaction at https://berkeley.minaexplorer.com/transaction/CkpZXjwhrjELZE4LV8MxitPTwmwy8TPp1L1aMeqNPmy8kFnqYKdVR
+waiting for zkApp state to change... (current state:  7)
+......................
+OCW: current value of roundId is 8
+request https://min-api.cryptocompare.com/data/pricemultifull?fsyms=MINA&tsyms=USD
+      - offchain-value 'RAW.MINA.USD.PRICE' = 0.493
+      - onchain-value 'RAW.MINA.USD.PRICE' = 0.493
+Creating an execution proof...
+creating proof took 41.357 seconds
+Sending the transaction...
+See transaction at https://berkeley.minaexplorer.com/transaction/CkpZ3h6QXArsYe1JGgcG1xmZqTm3tzDF2q8J5fdxHYipVfdv9UFk6
+waiting for zkApp state to change... (current state:  490)
+............................................................
+
+```
+  
+</details>
+
+### [Demo]() -- n min
+
+-----------------
 
 ## Testing on LocalBlockchain
 
