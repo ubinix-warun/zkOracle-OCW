@@ -22,7 +22,7 @@ import { JSONPath } from 'jsonpath-plus';
 (async function main() {
   await isReady;
 
-  console.log('SnarkyJS loaded');
+  console.log('OCW: SnarkyJS loaded');
 
   // ----------------------------------------------------
 
@@ -91,7 +91,7 @@ import { JSONPath } from 'jsonpath-plus';
   }
 
   let roundId = (await zkapp.roundId.get())!;
-  console.log('current value of roundId is', roundId.toString());
+  console.log('OCW: current value of roundId is', roundId.toString());
 
   try {
     for (;;) {
@@ -110,7 +110,7 @@ import { JSONPath } from 'jsonpath-plus';
       });
 
       roundId = (await zkapp.roundId.get())!;
-      console.log('current value of roundId is', roundId.toString());
+      console.log('OCW: current value of roundId is', roundId.toString());
 
       // ----------------------------------------------------
       // Request Price and Feed data to on-chain
@@ -122,8 +122,12 @@ import { JSONPath } from 'jsonpath-plus';
       const response = await fetch(priceUrl);
       const data = await response.json();
       const result = JSONPath({ path: pricePath, json: data });
-      const r100 = Math.floor((result[0] * 100) as number);
-      const feedData = Field(r100);
+      const r1000 = Math.floor((result[0] * 1000) as number);
+      const feedData = Field(r1000);
+
+      console.log(`request ${priceUrl}
+      - offchain-value '${pricePath}' = ${r1000 / 1000}
+      - onchain-value '${pricePath}' = ${Number(feedData.toBigInt()) / 1000}`);
 
       const signatureFeed = Signature.create(zkAppPrivateKey, [
         roundId,
@@ -140,10 +144,10 @@ import { JSONPath } from 'jsonpath-plus';
       });
 
       let onChainData = (await zkapp.feedData.get())!;
-      console.log('current value of roundId is', roundId.toString());
+      console.log('OCW: current value of roundId is', roundId.toString());
       console.log(
-        'current value of onchain is',
-        Number(onChainData.toBigInt()) / 100
+        'OCW: current value of MINA/USD is',
+        Number(onChainData.toBigInt()) / 1000
       );
     }
   } catch (e) {

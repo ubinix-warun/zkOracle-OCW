@@ -93,17 +93,20 @@ export const makeAndSendTransaction = async <State extends ToString>({
 
   let state = getState();
 
+  console.log(
+    'waiting for zkApp state to change... (current state: ',
+    state.toString() + ')'
+  );
+
   let stateChanged = false;
   while (!stateChanged) {
-    console.log(
-      'waiting for zkApp state to change... (current state: ',
-      state.toString() + ')'
-    );
+    process.stdout.write('.');
     await new Promise((resolve) => setTimeout(resolve, 5000));
     await fetchAccount({ publicKey: zkAppPublicKey });
     state = await getState();
     stateChanged = !statesEqual(initialState, state);
   }
+  process.stdout.write('\r\n');
 };
 
 // ========================================================
