@@ -6,7 +6,7 @@ the zkApps Hackathon -- [zkIgnite, Cohort 0 Begins](https://minaprotocol.com/blo
 The zkOracle/Off-chain worker for MINA protocol, Feed On-chain Data with Worker. <br/>
 Such as, ETH price, MINA or DOT from External API.
 
-<img src="https://user-images.githubusercontent.com/3756229/208229971-cde769c3-a05a-406b-ad80-fde62fb1b66e.png" width="70%">
+<img src="https://user-images.githubusercontent.com/3756229/208281723-e377ffac-2d4a-489b-bee4-bea92cd83807.png" width="70%">
 
 ## Setup contract and Keygen 
 
